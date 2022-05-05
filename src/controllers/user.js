@@ -14,6 +14,9 @@ app.get("/failed", (req, res) => {
   res.send("Failed");
 });
 app.get("/success", (req, res) => {
+    // let time = new Date();
+    // console.log(time);
+
   res.send(`Successfully login`);
 });
 
