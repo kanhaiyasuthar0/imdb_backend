@@ -3,6 +3,9 @@ const app = express();
 const passport = require("../../auth/google");
 const user = require("../models/user");
 app.use(passport.initialize());
+app.get("/", (req,res,next)=>{
+    res.send("Your app is ready")
+})
 app.get("/signin", (req, res, next) => {
   res.send();
 });
