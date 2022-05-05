@@ -12,7 +12,7 @@ passport.deserializeUser(function(user, done) {
 passport.use(new GoogleStrategy({
         clientID:"509599533215-ujobissjhcglik8rcrjt809en4qbqrfp.apps.googleusercontent.com",
         clientSecret:"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",
-        callbackURL: "http://localhost:9008/google/callback",
+        callbackURL: "https://imdbbackend.herokuapp.com/google/callback",
         passReqToCallback   : true
     },
     function(request, accessToken, refreshToken, profile, done) {
