@@ -1,4 +1,4 @@
-const http = require("https");
+const http = require("http");
 const app = require("./src/controllers/user");
 const connect = require("./src/config/db");
 const PORT = process.env.PORT ||  9007;
