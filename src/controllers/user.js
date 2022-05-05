@@ -35,7 +35,7 @@ app.get(
     let response =await user.findOne({email}).lean().exec();
     if(response){
 
-       
+       console.log("hello")
     }else{
        
     let userObj = {
