@@ -16,6 +16,7 @@
     "nodemon": "^2.0.16",
     "passport": "^0.5.2",
     "passport-google-oauth20": "^2.0.0",
-    "postcard": "^1.1.0"
+    "postcard": "^1.1.0",
+    "uuid": "^8.3.2"
   }
 }

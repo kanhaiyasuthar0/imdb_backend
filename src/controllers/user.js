@@ -2,6 +2,9 @@ const express = require("express");
 const app = express();
 const passport = require("../../auth/google");
 const user = require("../models/user");
+import { v4 as uuid } from 'uuid';
+
+
 app.use(passport.initialize());
 app.get("/", (req, res, next) => {
   res.send("Your app is ready");
@@ -41,7 +44,7 @@ app.get(
     } else {
       let userObj = {
         email: req.user.emails[0].value,
-        password: "NA",
+        password: uuid(),
         firstName: req.user._json.given_name,
         lastName: req.user._json.family_name,
       };
