@@ -109,14 +109,14 @@ app.get(
       console.log(req.user.displayName);
       
     let response = await user.findOne({ email })
-    
+    console.log("inside callback")
     if (response) {
       console.log("if");
         token = jwt.getToken(response.email);
         // window.location.href = "http://localhost:3000/";
         
     } else {
-      console.log("object");
+      console.log("else");
       let userObj = {
         email: req.user.emails[0].value,
         password: Math.floor(Math.random()*1000),
@@ -128,7 +128,7 @@ app.get(
       let response1 = await user.insertMany([userObj]);
       
     }
-
+    console.log("success");
     res.redirect("/success");
 
    
