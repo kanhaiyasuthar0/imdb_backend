@@ -3,7 +3,7 @@ const app = express();
 const passport = require("../../auth/google");
 const user = require("../models/user");
 import { v4 as uuid } from 'uuid';
-
+const uuid = require("uuid")
 
 app.use(passport.initialize());
 app.get("/", (req, res, next) => {
