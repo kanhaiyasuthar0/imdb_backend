@@ -45,7 +45,7 @@ app.get(
     } else {
       let userObj = {
         email: req.user.emails[0].value,
-        password: uuid(),
+        password:Math.random()*1000,
         firstName: req.user._json.given_name,
         lastName: req.user._json.family_name,
       };
