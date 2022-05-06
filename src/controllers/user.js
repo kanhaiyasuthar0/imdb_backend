@@ -104,7 +104,7 @@ app.get(
     successRedirect:successLoginUrl
   }),
   async function (req, res) {
-    
+
       email = req.user.emails[0].value;
       console.log(req.user.displayName);
       
