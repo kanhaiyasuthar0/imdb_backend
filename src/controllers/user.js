@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const passport = require("../../auth/google");
 const user = require("../models/user");
-
+const jwt = require("../checker/jwt")
 const uuid = require("uuid")
 
 app.use(passport.initialize());
@@ -20,7 +20,7 @@ app.get("/failed", (req, res) => {
 app.get("/success", (req, res) => {
   // let time = new Date();
   // console.log(time);
-
+    console.log(req)
   res.send(`Successfully login`);
 });
 
@@ -45,7 +45,7 @@ app.get(
     } else {
       let userObj = {
         email: req.user.emails[0].value,
-        password:Math.random()*1000,
+        password: Math.floor(Math.random()*1000),
         firstName: req.user._json.given_name,
         lastName: req.user._json.family_name,
       };
