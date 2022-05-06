@@ -1,6 +1,8 @@
 const http = require("http");
 const app = require("./src/controllers/user");
 const connect = require("./src/config/db");
+const cors = require("cors");
+
 const PORT = process.env.PORT ||  9007;
 console.log(PORT)
 http.createServer(app).listen(PORT, async ()=>{
