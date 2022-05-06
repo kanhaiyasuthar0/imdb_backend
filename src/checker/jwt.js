@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const mySecretCode = "MySecretCode";
 
 const getToken = (payload)=>{
+    
     let token = jwt.sign(payload, mySecretCode);
     return token
 }

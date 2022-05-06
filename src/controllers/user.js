@@ -4,9 +4,9 @@ const passport = require("../../auth/google");
 const user = require("../models/user");
 const jwt = require("../checker/jwt")
 const uuid = require("uuid")
-
+const bodyParser = require("body-parser");
 app.use(passport.initialize());
-// app.use()
+app.use(bodyParser.json([]))
 app.get("/", (req, res, next) => {
   res.send("Your app is ready");
 });
@@ -19,8 +19,8 @@ app.get("/failed", (req, res) => {
 });
 app.get("/success", (req, res) => {
   // let time = new Date();
-  // console.log(time);
-    console.log(req)
+  console.log(req, "req");
+
   res.send(`Successfully login`);
 });
 
@@ -41,7 +41,8 @@ app.get(
 
     let response = await user.findOne({ email })
     if (response) {
-        console.log(response)
+        let token = jwt.getToken(response.email);
+        
     } else {
       let userObj = {
         email: req.user.emails[0].value,
@@ -51,6 +52,8 @@ app.get(
       };
 
       let response1 = await user.insertMany([userObj]);
+    //   res.json(jwt.getToken(response1.))
+    // console.log("res1", response1);
     }
 
     res.redirect("/success");
