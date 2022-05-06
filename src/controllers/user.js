@@ -33,20 +33,21 @@ app.get(
     failureRedirect: "/failed",
   }),
   async function (req, res) {
-    // let email = req.user.emails[0].value;
+    let email = req.user.emails[0].value;
 
-    // let response = await user.findOne({ email }).lean().exec();
-    // if (response) {
-    // } else {
-    //   let userObj = {
-    //     email: req.user.emails[0].value,
-    //     password: "NA",
-    //     firstName: req.user._json.given_name,
-    //     lastName: req.user._json.family_name,
-    //   };
+    let response = await user.findOne({ email })
+    if (response) {
+        console.log(response)
+    } else {
+      let userObj = {
+        email: req.user.emails[0].value,
+        password: "NA",
+        firstName: req.user._json.given_name,
+        lastName: req.user._json.family_name,
+      };
 
-    //   let response = await user.insertMany([userObj]);
-    // }
+      let response1 = await user.insertMany([userObj]);
+    }
 
     res.redirect("/success");
 
