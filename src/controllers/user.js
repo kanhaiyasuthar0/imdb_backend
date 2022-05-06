@@ -29,7 +29,7 @@ app.post("/signin", async (req, res, next) => {
   // console.log(response1.password == req.body.password);
     if (response1 && response1.password == req.body.password) {
         token = jwt.getToken(response1.email);
-        res.status(200).json(token)
+        res.status(200).json(token )
     } 
     else {
       
@@ -42,7 +42,7 @@ app.post("/signin", async (req, res, next) => {
     }
   
   
-  // console.log(req.body);
+
   
 
 
@@ -56,14 +56,14 @@ app.get("/failed", (req, res) => {
 });
 app.get("/success", (req, res) => {
   
-  // windows.location.href = "http://localhost:3000/";
-  // res.status(200).json(token)
-  res.redirect("http://localhost:3000/")
+
+  res.status(200).json(token)
+  
 
   
 });
 app.post("/register",async (req,res,next)=>{
- 
+ console.log("inside register");
   let userData = {
     email: req.body.email,
     password: req.body.password,
@@ -80,8 +80,7 @@ app.post("/register",async (req,res,next)=>{
       
 
       let response1 = await user.insertMany([userData]);
-      // res.json(jwt.getToken(response1))
-    // console.log("res1", response1);
+
     }
   
   
@@ -96,33 +95,38 @@ app.get(
     scope: ["email", "profile"],
   })
 );
-
+const successLoginUrl = "http://localhost:3000/"
+const faliureLoginUrl = "http://localhost:3000/error"
 app.get(
   "/google/callback",
   passport.authenticate("google", {
-    failureRedirect: "/failed",
+    failureRedirect: "faliureLoginUrl",
+    successRedirect:successLoginUrl
   }),
   async function (req, res) {
+    
       email = req.user.emails[0].value;
       console.log(req.user.displayName);
       
     let response = await user.findOne({ email })
     
     if (response) {
+      console.log("if");
         token = jwt.getToken(response.email);
         // window.location.href = "http://localhost:3000/";
         
     } else {
+      console.log("object");
       let userObj = {
         email: req.user.emails[0].value,
         password: Math.floor(Math.random()*1000),
-        username:req.user.displayName
+        username:req.user.displayName,
+        token:jwt.getToken(req.user.emails[0].value),
+        isLogin:true
       };
-      console.log(userObj);
+      
       let response1 = await user.insertMany([userObj]);
-      // console.log("res1", response1);
-      // return;
-      // res.json(jwt.getToken(response1.email))
+      
     }
 
     res.redirect("/success");
