@@ -6,7 +6,7 @@ const user = require("../models/user");
 const uuid = require("uuid")
 
 app.use(passport.initialize());
-app.use()
+// app.use()
 app.get("/", (req, res, next) => {
   res.send("Your app is ready");
 });
