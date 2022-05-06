@@ -1,12 +1,15 @@
 const express = require("express");
 const app = express();
+
 const passport = require("../../auth/google");
 const user = require("../models/user");
 const jwt = require("../checker/jwt")
 const uuid = require("uuid")
 const bodyParser = require("body-parser");
-app.use(passport.initialize());
+// app.use(passport.initialize());
 app.use(bodyParser.json([]))
+let token;
+let email;
 app.get("/", (req, res, next) => {
   res.send("Your app is ready");
 });
@@ -18,11 +21,23 @@ app.get("/failed", (req, res) => {
   res.send("Failed");
 });
 app.get("/success", (req, res) => {
-  // let time = new Date();
-  console.log(req, "req");
-
-  res.send(`Successfully login`);
+  
+  res.status(200).json(token)
 });
+app.post("/register", (req,res,next)=>{
+ 
+  // let userData = {
+  //   email: req.body.email,
+  //   password: req.body.password,
+  //   username: req.body.username,
+ 
+ 
+  // }
+  // console.log(userData);
+  // console.log(req.body);
+  res.json(req.body)
+  // res.send("hello I am backend")
+})
 
 app.get(
   "/google",
@@ -37,11 +52,11 @@ app.get(
     failureRedirect: "/failed",
   }),
   async function (req, res) {
-    let email = req.user.emails[0].value;
+      email = req.user.emails[0].value;
 
     let response = await user.findOne({ email })
     if (response) {
-        let token = jwt.getToken(response.email);
+        token = jwt.getToken(response.email);
         
     } else {
       let userObj = {
