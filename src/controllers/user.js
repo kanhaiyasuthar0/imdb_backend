@@ -21,8 +21,9 @@ app.post("/signin", async (req, res, next) => {
     email: req.body.email,
     password: req.body.password
   }
+
   let email = req.body.email
-  // console.log(req.body);
+  console.log(req.body);
   // res.send(req.body)
   let response1 = await user.findOne({ email })
   // console.log(resp);
@@ -64,29 +65,31 @@ app.get("/success", (req, res) => {
 });
 app.post("/register",async (req,res,next)=>{
  console.log("inside register");
-  let userData = {
-    email: req.body.email,
-    password: req.body.password,
-    username: req.body.username,
  
- 
-  }
   let email = req.body.email
   let response1 = await user.findOne({ email })
     if (response1) {
-        token = jwt.getToken(response.email);
-        
+      console.log("in if");
+        token = jwt.getToken(response1.email);
+        res.send(token, response1 )
     } else {
-      
+      console.log("in else");
 
+      token = jwt.getToken(response1.email);
+      let userData = {
+        email: req.body.email,
+        password: req.body.password,
+        username: req.body.username,
+        
+        
+      }
       let response1 = await user.insertMany([userData]);
 
+        res.send(response1, token)
     }
   
   
-  // console.log(req.body);
-  res.json(userData)
-  // res.send("hello I am backend")
+  
 })
 
 app.get(
@@ -95,16 +98,17 @@ app.get(
     scope: ["email", "profile"],
   })
 );
-const successLoginUrl = "http://localhost:3000/"
-const faliureLoginUrl = "http://localhost:3000/error"
+const successLoginUrl = "http://localhost:3000/login/success"
+const faliureLoginUrl = "http://localhost:3000/login/error"
 app.get(
   "/google/callback",
   passport.authenticate("google", {
-    failureRedirect: "faliureLoginUrl",
-    successRedirect:successLoginUrl
+    failureRedirect:faliureLoginUrl ,
+    successRedirect:successLoginUrl,
+    
   }),
   async function (req, res) {
-
+    console.log("success");
       email = req.user.emails[0].value;
       console.log(req.user.displayName);
       
@@ -128,7 +132,7 @@ app.get(
       let response1 = await user.insertMany([userObj]);
       
     }
-    console.log("success");
+    // // console.log("success");
     res.redirect("/success");
 
    
