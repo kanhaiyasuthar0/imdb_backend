@@ -56,9 +56,9 @@ app.get("/failed", (req, res) => {
 });
 app.get("/success", (req, res) => {
   
-  window.location.href = "http://localhost:3000/";
-  // res.status(200).json(token)
-  res.render("/")
+  // window.location.href = "http://localhost:3000/";
+  res.status(200).json(token)
+  // res.render("/")
 
   
 });
