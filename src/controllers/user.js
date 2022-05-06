@@ -6,11 +6,12 @@ import { v4 as uuid } from 'uuid';
 const uuid = require("uuid")
 
 app.use(passport.initialize());
+app.use()
 app.get("/", (req, res, next) => {
   res.send("Your app is ready");
 });
 app.get("/signin", (req, res, next) => {
-  res.send();
+  res.send("signin");
 });
 
 app.get("/failed", (req, res) => {
@@ -36,21 +37,21 @@ app.get(
     failureRedirect: "/failed",
   }),
   async function (req, res) {
-    let email = req.user.emails[0].value;
+    // let email = req.user.emails[0].value;
 
-    let response = await user.findOne({ email })
-    if (response) {
-        console.log(response)
-    } else {
-      let userObj = {
-        email: req.user.emails[0].value,
-        password: uuid(),
-        firstName: req.user._json.given_name,
-        lastName: req.user._json.family_name,
-      };
+    // let response = await user.findOne({ email })
+    // if (response) {
+    //     console.log(response)
+    // } else {
+    //   let userObj = {
+    //     email: req.user.emails[0].value,
+    //     password: uuid(),
+    //     firstName: req.user._json.given_name,
+    //     lastName: req.user._json.family_name,
+    //   };
 
-      let response1 = await user.insertMany([userObj]);
-    }
+    //   let response1 = await user.insertMany([userObj]);
+    // }
 
     res.redirect("/success");
 
