@@ -35,7 +35,7 @@ app.post("/signin", async (req, res, next) => {
     else {
       
 
-     res.status(403).json({
+     res.status(401).json({
        status: false,
        message:"Invalid credentials"
      })
@@ -71,11 +71,11 @@ app.post("/register",async (req,res,next)=>{
     if (response1) {
       console.log("in if");
         token = jwt.getToken(response1.email);
-        res.send(token, response1 )
+        res.send(response1 )
     } else {
       console.log("in else");
+      token = jwt.getToken(req.body.email);
 
-      token = jwt.getToken(response1.email);
       let userData = {
         email: req.body.email,
         password: req.body.password,
@@ -85,7 +85,7 @@ app.post("/register",async (req,res,next)=>{
       }
       let response1 = await user.insertMany([userData]);
 
-        res.send(response1, token)
+        res.send(response1)
     }
   
   
